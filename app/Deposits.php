@@ -1,0 +1,41 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Deposits extends Model
+{
+    public $helper;
+    public $jsonHelper;
+
+    public function __construct()
+    {
+        $this->helper     = new HelperFunctions(false);
+        $this->jsonHelper = new HelperFunctions();
+
+    }
+
+    public static function AddPlayerTransaction($data)
+    {
+        $jsonHelper = new HelperFunctions();
+        $i = 1;
+        $params = '';
+
+        foreach ($data as $value) {
+
+            $params .= '&p'.$i.'="'.$value.'"';
+            $i++;
+        }
+
+        // dd("dgsapi.php?db&sp=WebInsertPlayerTransaction".$params);
+        return $jsonHelper->Get("dgsapi.php?db&sp=WebInsertPlayerTransaction".$params, true);
+
+    }
+
+
+    public function GetPaymentMethods()
+    {
+        return $this->jsonHelper->Get("dgsapi.php?db&sp=PaymentMethod_GetList", true);
+    }
+}

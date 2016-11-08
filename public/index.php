@@ -1,10 +1,11 @@
 <?php
-
+ini_set("display_errors", "1");
+ error_reporting(E_ALL);
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
+ * @package Laravel
+ * @author  Taylor Otwell <taylorotwell@gmail.com>
  */
 
 /*
@@ -33,7 +34,7 @@ require __DIR__.'/../bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = include_once __DIR__.'/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------

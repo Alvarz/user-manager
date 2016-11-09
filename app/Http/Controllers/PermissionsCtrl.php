@@ -18,7 +18,7 @@ class PermissionsCtrl extends Controller
     {
         if (Auth::user()->can('permission.list')) {
 
-            $data["permissions"] = Permission::all();
+            $data["permissions"] = Permission::paginate(10);
             return view('modules/permissions/permissions')->with($data);
 
         }else{

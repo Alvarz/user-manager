@@ -27,7 +27,7 @@ class WithdrawalSeeder extends Seeder
                 'destination_bank' => $faker->company,
                 'account_number' => $faker->bankAccountNumber,
                 'amount' => $faker->numberBetween($min = 50, $max = 100),
-                'status' => 'waiting review',
+                'status' => 'waiting',
                 'IdPlayer' => 17299,
                 'client_id' => $apps[$faker->numberBetween(0, $total)]->client_id,
                 'created_at' => Carbon::now(),

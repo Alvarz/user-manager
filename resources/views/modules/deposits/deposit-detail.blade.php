@@ -84,6 +84,10 @@
                       <div class="label label-danger">
                         {{$deposit->status}}
                       </div>
+                      @elseif($deposit->status == 'verified')
+                      <div class="label label-info">
+                        {{$deposit->status}}
+                      </div>
                       @else
                       <div class="label label-warning">
                         {{$deposit->status}}
@@ -157,25 +161,36 @@
                       <img src="{{$deposit->voucher_img}}" alt="voucher_img" />
                   </div>
 
-                  @if($deposit->status == 'waiting review')
+                  @if($deposit->status == 'waiting' || $deposit->status == 'verified')
 
                     @can('deposits.edit')
                       <div class="col-sm-6 col-xs-12">
-                        <a href="#"  data-url="deposits" data-id="{{$deposit->id}}" data-idplayer="{{$deposit->IdPlayer}}" data-status="approved" class="btn btn-lg btn-success statusBtn" >Approve</a>
+                        @if($deposit->status == 'verified')
+                          @can('deposits.edit.verified')
+                            <a href="#" data-url="deposits" data-id="{{$deposit->id}}" data-idplayer="{{$deposit->IdPlayer}}" data-status="approved" class="btn btn-lg btn-success statusBtn" >Approve</a>
+                          @endcan
+                        @else
+                          @can('deposits.edit.waiting')
+                            <a href="#" data-url="deposits" data-id="{{$deposit->id}}" data-idplayer="{{$deposit->IdPlayer}}" data-status="verified" class="btn btn-lg btn-info statusBtn" >Verify</a>
+                          @endcan
+                        @endif
+
                         <a href="#"  data-url="deposits"  data-id="{{$deposit->id}}" data-idplayer="{{$deposit->IdPlayer}}" data-status="rejected" class="btn btn-lg btn-danger statusBtn">Reject</a>
-                        <div style="margin-top:20px" class="form-group">
-                          <label for="">Payment method</label>
-                          <select class="form-control" name="PayMethod" id="PayMethod" required>
-                            @foreach($paymentMethod as $method)
-                              <option value="{{$method->IdPaymentMethod}}" >{{$method->PaymentMethodName}}</option>
-                            @endforeach
-                          </select>
-                        </div>
+                        @if($deposit->status == 'waiting')
+                          <div style="margin-top:20px" class="form-group">
+                            <label for="">Payment method</label>
+                            <select class="form-control" name="PayMethod" id="PayMethod" required>
+                              @foreach($paymentMethod as $method)
+                                <option value="{{$method->IdPaymentMethod}}" >{{$method->PaymentMethodName}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        @endif
 
                       </div>
                     @endcan
-
-                  @else
+                  @endif
+                  @if($deposit->status != 'waiting')
                   <div class="col-sm-6 col-xs-12">
                       <h3>Review info</h3>
                     <table class="table table-striped table-border">

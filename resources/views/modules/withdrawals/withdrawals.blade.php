@@ -9,7 +9,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                Deposits list
+                Withdrawals list
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -29,7 +29,8 @@
                         </form>
                       </div>
                       <div class="col-xs-6">
-                        <a href="/withdrawals" class="btn btn-sm btn-default" >All</a>
+                        <a href="/withdrawals/all" class="btn btn-sm btn-default" >All</a>
+                        <a href="/deposits/verified" class="btn btn-sm btn-info" >verified</a>
                         <a href="/withdrawals/approved" class="btn btn-sm btn-success" >approved</a>
                         <a href="/withdrawals/rejected" class="btn btn-sm btn-danger" >rejected</a>
                         <a href="/withdrawals/waiting" class="btn btn-sm btn-warning" >approved</a>
@@ -88,6 +89,10 @@
                           </div>
                           @elseif($withdrawal->status == 'rejected')
                           <div class="label label-danger">
+                            {{$withdrawal->status}}
+                          </div>
+                          @elseif($withdrawal->status == 'verified')
+                          <div class="label label-info">
                             {{$withdrawal->status}}
                           </div>
                           @else

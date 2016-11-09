@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name', 'Cashier') }}
             </a>
         </div>
 
@@ -34,22 +34,35 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                       @inject('deposit', 'App\Http\Controllers\DepositsCtrl')
 
-                      @if($deposit->GetWaitingDepositsCount() > 0)
-                        <span class="badge badge-info">{{$deposit->GetWaitingDepositsCount()}}</span>
+                      @if($deposit->GetWaitingDepositsCount() > 0 || $deposit->GetWaitingDepositsCount('verified') > 0)
+                        <span class="badge badge-danger"><i class="glyphicon glyphicon-asterisk" ></i></span>
                       @endif Deposits <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                      <li>
-                          <a href="{{ url('/deposits/waiting') }}">
+                      @can('deposits.edit.waiting')
+                        <li>
+                            <a href="{{ url('/deposits/waiting') }}">
 
-                            Deposits waiting
-                            @if($deposit->GetWaitingDepositsCount() > 0)
-                              <span class="badge badge-info">{{$deposit->GetWaitingDepositsCount()}}</span>
+                              Deposits waiting
+                              @if($deposit->GetWaitingDepositsCount() > 0)
+                                <span class="badge badge-warning">{{$deposit->GetWaitingDepositsCount()}}</span>
+                              @endif
+                            </a>
+                        </li>
+                      @endcan
+                      @can('deposits.edit.verified')
+                      <li>
+                          <a href="{{ url('/deposits/verified') }}">
+
+                            Deposits verified
+                            @if($deposit->GetWaitingDepositsCount('verified') > 0)
+                              <span class="badge badge-info">{{$deposit->GetWaitingDepositsCount('verified')}}</span>
                             @endif
                           </a>
                       </li>
+                      @endcan
                       <li>
-                        <a href="{{ url('/deposits') }}">Deposits list</a>
+                        <a href="{{ url('/deposits/all') }}">Deposits list</a>
                       </li>
                     </ul>
                   </li>
@@ -59,22 +72,35 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="{{ url('/withdrawals') }}">
                     @inject('Withdrawal', 'App\Http\Controllers\WithdrawalCtrl')
 
-                    @if($Withdrawal->GetWaitingWithdrawalsCount() > 0)
-                      <span class="badge badge-warning">{{$Withdrawal->GetWaitingWithdrawalsCount()}}</span>
+                    @if($Withdrawal->GetWaitingWithdrawalsCount() > 0 || $Withdrawal->GetWaitingWithdrawalsCount('verified') > 0)
+                      <span class="badge badge-danger"><i class="glyphicon glyphicon-asterisk"></i></span>
                     @endif Withdrawals <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                      <li>
-                          <a href="{{ url('/withdrawals/waiting') }}">
+                      @can('withdrawals.edit.waiting')
+                        <li>
+                            <a href="{{ url('/withdrawals/waiting') }}">
 
-                            Withdrawals waiting
-                            @if($Withdrawal->GetWaitingWithdrawalsCount() > 0)
-                              <span class="badge badge-warning">{{$Withdrawal->GetWaitingWithdrawalsCount()}}</span>
-                            @endif
-                          </a>
-                      </li>
+                              Withdrawals waiting
+                              @if($Withdrawal->GetWaitingWithdrawalsCount() > 0)
+                                <span class="badge badge-warning">{{$Withdrawal->GetWaitingWithdrawalsCount()}}</span>
+                              @endif
+                            </a>
+                        </li>
+                      @endcan
+                      @can('withdrawals.edit.verified')
+                        <li>
+                            <a href="{{ url('/withdrawals/verified') }}">
+
+                              Withdrawals waiting
+                              @if($Withdrawal->GetWaitingWithdrawalsCount('verified') > 0)
+                                <span class="badge badge-info">{{$Withdrawal->GetWaitingWithdrawalsCount('verified')}}</span>
+                              @endif
+                            </a>
+                        </li>
+                      @endcan
                       <li>
-                        <a href="{{ url('/withdrawals') }}">withdrawals list</a>
+                        <a href="{{ url('/withdrawals/all') }}">withdrawals list</a>
                       </li>
                     </ul>
                   </li>

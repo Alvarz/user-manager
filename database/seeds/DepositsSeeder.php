@@ -32,7 +32,7 @@ class DepositsSeeder extends Seeder
                 'voucher_img' => 'http://placehold.it/350x150',
                 'voucher_number' => $faker->creditCardNumber,
                 'origin_bank' => $faker->company,
-                'status' => 'waiting review',
+                'status' => 'waiting',
                 'IdPlayer' => 17299,
                 'client_id' => $apps[$faker->numberBetween(0, $total)]->client_id,
                 'created_at' => Carbon::now(),

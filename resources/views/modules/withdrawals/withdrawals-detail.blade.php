@@ -72,6 +72,10 @@
                       <div class="label label-danger">
                         {{$withdrawal->status}}
                       </div>
+                      @elseif($withdrawal->status == 'verified')
+                      <div class="label label-info">
+                        {{$withdrawal->status}}
+                      </div>
                       @else
                       <div class="label label-warning">
                         {{$withdrawal->status}}
@@ -138,51 +142,60 @@
                   </tbody>
                 </table>
                 <div class="row">
-                  @if($withdrawal->status == 'waiting review')
+                  @if($withdrawal->status == 'waiting' || $withdrawal->status == 'verified')
 
                     @can('withdrawals.edit')
                       <div style="text-align:center" class="col-sm-6 col-sm-offset-3 col-xs-12">
-                        <a href="#" data-url="withdrawals" data-id="{{$withdrawal->id}}" data-idplayer="{{$withdrawal->IdPlayer}}" data-status="approved" class="btn btn-lg btn-success statusBtn" >Approve</a>
+                        @if($withdrawal->status == 'verified')
+                          @can('withdrawals.edit.verified')
+                            <a href="#" data-url="withdrawals" data-id="{{$withdrawal->id}}" data-idplayer="{{$withdrawal->IdPlayer}}" data-status="approved" class="btn btn-lg btn-success statusBtn" >Approve</a>
+                          @endcan
+                        @else
+                          @can('withdrawals.edit.waiting')
+                            <a href="#" data-url="withdrawals" data-id="{{$withdrawal->id}}" data-idplayer="{{$withdrawal->IdPlayer}}" data-status="verified" class="btn btn-lg btn-info statusBtn" >Verify</a>
+                          @endcan
+                        @endif
                         <a href="#" data-url="withdrawals" data-id="{{$withdrawal->id}}" data-idplayer="{{$withdrawal->IdPlayer}}" data-status="rejected" class="btn btn-lg btn-danger statusBtn">Reject</a>
-                        <div style="margin-top:20px" class="form-group">
-                          <label for="">Payment method</label>
-                          <select class="form-control" name="PayMethod" id="PayMethod" required>
-                            @foreach($paymentMethod as $method)
-                              <option value="{{$method->IdPaymentMethod}}" >{{$method->PaymentMethodName}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-
+                        @if($withdrawal->status == 'waiting')
+                          <div style="margin-top:20px" class="form-group">
+                            <label for="">Payment method</label>
+                            <select class="form-control" name="PayMethod" id="PayMethod" required>
+                              @foreach($paymentMethod as $method)
+                                <option value="{{$method->IdPaymentMethod}}" >{{$method->PaymentMethodName}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        @endif
                       </div>
                     @endcan
-
-                  @else
-                  <div class="col-sm-6 col-xs-12">
-                      <h3>Review info</h3>
-                    <table class="table table-striped table-border">
-                      <thead>
-                        <tr>
-                          <th>
-                            Reviewed by
-                          </th>
-                          <th>
-                            date
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            {{$user->name}}
-                          </td>
-                          <td>
-                            {{$withdrawal->updated_at}}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
                   @endif
+                    @if($withdrawal->status != 'waiting')
+                      <div class="col-sm-6 col-xs-12">
+                          <h3>Review info</h3>
+                        <table class="table table-striped table-border">
+                          <thead>
+                            <tr>
+                              <th>
+                                Reviewed by
+                              </th>
+                              <th>
+                                date
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                {{$user->name}}
+                              </td>
+                              <td>
+                                {{$withdrawal->updated_at}}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    @endif
                 </div>
               </div>
             </div>

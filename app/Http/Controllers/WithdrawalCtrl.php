@@ -17,25 +17,25 @@ class WithdrawalCtrl extends Controller
 
     }
 
-    static function GetWaitingWithdrawalsCount()
+    static function GetWaitingWithdrawalsCount($filter = 'waiting')
     {
 
-        return withdrawal::where('status', '=', 'waiting review')->count();
+        return withdrawal::where('status', '=', $filter)->count();
     }
 
     public function IndexPost(Request $request)
     {
-        return redirect('withdrawals/'.$request->filter);
+        return redirect('withdrawals/'.$request->filter.'/true');
 
     }
 
-    protected function index($filter = null)
+    protected function index($filter = null, $page = false)
     {
         if (Auth::user()->can('withdrawals.list')) {
 
             $m_Deposits = new Deposits();
 
-            $data["withdrawals"] = $this->getWithdrawals($filter);
+            $data["withdrawals"] = $this->getWithdrawals($filter, $page);
             $data["withdrawals"] = $m_Deposits->helper->searchWebsites($data["withdrawals"], true);
             $data['filter'] = $filter;
             $data['apps'] = Apps::all();
@@ -69,7 +69,7 @@ class WithdrawalCtrl extends Controller
                 $data['PlayerBalance'] = $this->ManagePlayerBalanceData($data['PlayerBalance']);
             }
 
-            if ($data['withdrawal']->status != 'waiting review') {
+            if ($data['withdrawal']->status != 'waiting') {
 
                 $data['user'] = User::findOrFail($data['withdrawal']->IdUser_reviewed);
 
@@ -95,7 +95,7 @@ class WithdrawalCtrl extends Controller
             $Withdrawal->IdUser_reviewed = Auth::user()->id;
             $Withdrawal->payment_method = $payment_method;
 
-            if ($status == 'approved') {
+            if ($status == 'verified') {
 
                 $params = $this->SetArrayDataTransaction($Withdrawal);
                 $resTrasaction = empty(Deposits::AddPlayerTransaction($params));
@@ -151,7 +151,7 @@ class WithdrawalCtrl extends Controller
                 'amount' => $request['amount'],
                 'destination_bank' => $request['destination_bank'],
                 'account_number' => $request['account_number'],
-                'status' => 'waiting review',
+                'status' => 'waiting',
                 'IdPlayer' => $request['IdPlayer'],
                 ]
             );
@@ -194,22 +194,17 @@ class WithdrawalCtrl extends Controller
         return $PlayerBalance;
     }
 
-    private function getWithdrawals($filter = null)
+    private function getWithdrawals($filter = null, $page = false)
     {
-        switch ($filter) {
-        case 'rejected':
-            $retorno = withdrawal::where('status', '=', 'rejected')->orderBy('updated_at', 'desc')->paginate(10);
-            break;
-        case 'approved':
-            $retorno = withdrawal::where('status', '=', 'approved')->orderBy('updated_at', 'desc')->paginate(10);
-            break;
-        case 'waiting':
-            $retorno = withdrawal::where('status', '=', 'waiting review')->orderBy('updated_at', 'desc')->paginate(10);
-            break;
-        default:
-            $retorno = withdrawal::orderBy('updated_at', 'desc')->paginate(10);
-            break;
+
+        if ($page) {
+            $retorno = withdrawal::where('client_id', '=', $filter)->orderBy('updated_at', 'desc')->paginate(10);
+        }elseif($filter == 'all') {
+            $retorno = withdrawal::paginate(10);
+        }else{
+            $retorno = withdrawal::where('status', '=', $filter)->orderBy('updated_at', 'desc')->paginate(10);
         }
+
         return $retorno;
     }
 

@@ -101,9 +101,9 @@ Route::delete('/apps/{idApp}', 'AppsCtrl@remove');
 /*******************************************************/
 //**********************DEPOSITS*****************************
 /********************************************************/
+Route::get('/deposits/details/{IdDeposit}', 'DepositsCtrl@depositDetails')->where('IdDeposit', '[0-9]+');
+Route::get('/deposits/{filter}/{page?}', 'DepositsCtrl@index');
 
-Route::get('/deposits/{filter?}', 'DepositsCtrl@index');
-Route::get('/deposits/details/{IdDeposit}', 'DepositsCtrl@depositDetails');
 
 Route::post('/deposits', 'DepositsCtrl@IndexPost');
 
@@ -112,9 +112,9 @@ Route::put('/deposits/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'Deposi
 /*******************************************************/
 //**********************WITHDRAWAL*****************************
 /********************************************************/
+Route::get('/withdrawals/details/{IdWithdrawal}', 'WithdrawalCtrl@withdrawalsDetails')->where('IdWithdrawal', '[0-9]+');
+Route::get('/withdrawals/{filter}/{page?}', 'WithdrawalCtrl@index');
 
-Route::get('/withdrawals/{filter?}', 'WithdrawalCtrl@index');
-Route::get('/withdrawals/details/{IdDeposit}', 'WithdrawalCtrl@withdrawalsDetails');
 
 Route::post('/withdrawals', 'WithdrawalCtrl@IndexPost');
 

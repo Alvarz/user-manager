@@ -263,6 +263,26 @@ class PermissionsSeeder extends Seeder
             ]
         );
 
+        DB::table('permissions')->insert(
+            [
+            'name' => 'edit witing deposits',
+            'slug' => 'deposits.edit.waiting',
+            'description' => 'edit verified deposits',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('permissions')->insert(
+            [
+            'name' => 'edit verified deposits',
+            'slug' => 'deposits.edit.verified',
+            'description' => 'edit verified deposits',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+            ]
+        );
+
           /*WITHDRAWALS*/
 
         DB::table('permissions')->insert(
@@ -300,6 +320,26 @@ class PermissionsSeeder extends Seeder
             'name' => 'delete withdrawals',
             'slug' => 'withdrawals.delete',
             'description' => 'delete withdrawals',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('permissions')->insert(
+            [
+            'name' => 'edit witing withdrawals',
+            'slug' => 'withdrawals.edit.waiting',
+            'description' => 'edit verified withdrawals',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('permissions')->insert(
+            [
+            'name' => 'edit verified withdrawals',
+            'slug' => 'withdrawals.edit.verified',
+            'description' => 'edit verified withdrawals',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
             ]

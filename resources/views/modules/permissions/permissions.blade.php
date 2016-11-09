@@ -56,6 +56,11 @@
                 @can('permission.add')
                 <a href="/permissions/create" class="btn btn-info">Add new permission</a>
                 @endcan
+
+                <div style="text-align:center" class="panel-footer">
+
+                  {{ $permissions->links() }}
+                </div>
               </div>
             </div>
         </div>

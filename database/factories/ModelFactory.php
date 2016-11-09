@@ -51,7 +51,7 @@ $factory->define(
 //         'voucher_img' => 'http://placehold.it/350x150',
 //         'voucher_number' => $faker->creditCardNumber,
 //         'origin_bank' => $faker->company,
-//         'status' => 'waiting review',
+//         'status' => 'waiting',
 //         'IdPlayer' => 17299,
 //         'client_id' => (int)$apps->client_id,
 //         ];

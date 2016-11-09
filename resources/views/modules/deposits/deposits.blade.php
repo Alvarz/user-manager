@@ -29,10 +29,11 @@
                         </form>
                       </div>
                       <div class="col-xs-6">
-                        <a href="/deposits" class="btn btn-sm btn-default" >All</a>
+                        <a href="/deposits/all" class="btn btn-sm btn-default" >All</a>
+                        <a href="/deposits/verified" class="btn btn-sm btn-info" >verified</a>
                         <a href="/deposits/approved" class="btn btn-sm btn-success" >approved</a>
                         <a href="/deposits/rejected" class="btn btn-sm btn-danger" >rejected</a>
-                        <a href="/deposits/waiting" class="btn btn-sm btn-warning" >approved</a>
+                        <a href="/deposits/waiting" class="btn btn-sm btn-warning" >waiting</a>
                       </div>
                     </div>
                   </div>
@@ -84,6 +85,10 @@
                         <td>
                           @if($deposit->status == 'approved')
                           <div class="label label-success">
+                            {{$deposit->status}}
+                          </div>
+                          @elseif($deposit->status == 'verified')
+                          <div class="label label-info">
                             {{$deposit->status}}
                           </div>
                           @elseif($deposit->status == 'rejected')

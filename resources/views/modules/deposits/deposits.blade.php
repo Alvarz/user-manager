@@ -14,10 +14,27 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-xs-12" style="text-align:right;">
-                    <a href="/deposits" class="btn btn-sm btn-default" >All</a>
-                    <a href="/deposits/approved" class="btn btn-sm btn-success" >approved</a>
-                    <a href="/deposits/rejected" class="btn btn-sm btn-danger" >rejected</a>
-                    <a href="/deposits/waiting" class="btn btn-sm btn-warning" >approved</a>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <form role="form" method="POST" action="/deposits">
+                          <div class="form-group">
+                            <select onchange="this.form.submit()" class="form-control" name="filter" id="filter">
+                                <option>Filter by website</option>
+                              @foreach($apps as $app)
+                                <option @if($filter == $app->client_id) selected @endif value="{{$app->client_id}}" >{{$app->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          {!! csrf_field() !!}
+                        </form>
+                      </div>
+                      <div class="col-xs-6">
+                        <a href="/deposits" class="btn btn-sm btn-default" >All</a>
+                        <a href="/deposits/approved" class="btn btn-sm btn-success" >approved</a>
+                        <a href="/deposits/rejected" class="btn btn-sm btn-danger" >rejected</a>
+                        <a href="/deposits/waiting" class="btn btn-sm btn-warning" >approved</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <table class="table table-striped" >

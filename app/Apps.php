@@ -23,4 +23,14 @@ class Apps extends Model
     protected $hidden = [
       'api_token'
     ];
+
+    public function Deposits()
+    {
+        return $this->hasMany('App\Deposits', 'client_id', 'client_id');
+    }
+
+    public function Withdrawal()
+    {
+        return $this->hasMany('App\withdrawal', 'client_id', 'client_id');
+    }
 }

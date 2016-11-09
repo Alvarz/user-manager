@@ -105,6 +105,7 @@ Route::delete('/apps/{idApp}', 'AppsCtrl@remove');
 Route::get('/deposits/{filter?}', 'DepositsCtrl@index');
 Route::get('/deposits/details/{IdDeposit}', 'DepositsCtrl@depositDetails');
 
+Route::post('/deposits', 'DepositsCtrl@IndexPost');
 
 Route::put('/deposits/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'DepositsCtrl@update');
 
@@ -115,5 +116,6 @@ Route::put('/deposits/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'Deposi
 Route::get('/withdrawals/{filter?}', 'WithdrawalCtrl@index');
 Route::get('/withdrawals/details/{IdDeposit}', 'WithdrawalCtrl@withdrawalsDetails');
 
+Route::post('/withdrawals', 'WithdrawalCtrl@IndexPost');
 
 Route::put('/withdrawals/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'WithdrawalCtrl@update');

@@ -8,6 +8,7 @@ use App\User;
 use App\Players;
 use Carbon\Carbon;
 use Auth;
+use App\Apps;
 
 class DepositsCtrl extends Controller
 {
@@ -24,6 +25,12 @@ class DepositsCtrl extends Controller
         return Deposits::where('status', '=', 'waiting review')->count();
     }
 
+    public function IndexPost(Request $request)
+    {
+        return redirect('deposits/'.$request->filter);
+
+    }
+
     protected function index($filter = null)
     {
         if (Auth::user()->can('deposits.list')) {
@@ -32,6 +39,8 @@ class DepositsCtrl extends Controller
 
             $data["deposits"] = $this->getDeposits($filter);
             $data["deposits"] = $m_Deposits->helper->searchWebsites($data["deposits"]);
+            $data['filter'] = $filter;
+            $data['apps'] = Apps::all();
 
             return view('modules/deposits/deposits')->with($data);
 
@@ -203,7 +212,7 @@ class DepositsCtrl extends Controller
             $retorno = Deposits::where('status', '=', 'waiting review')->orderBy('updated_at', 'desc')->paginate(10);
             break;
         default:
-            $retorno = Deposits::orderBy('updated_at', 'desc')->paginate(10);
+            $retorno = Deposits::where('client_id', '=', $filter)->orderBy('updated_at', 'desc')->paginate(10);
             break;
         }
         return $retorno;

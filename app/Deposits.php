@@ -61,6 +61,6 @@ class Deposits extends Model
 
     public function App()
     {
-        return $this->hasOne('App\Apps', 'client_id', 'client_id');
+        return $this->belongsTo('App\Apps', 'client_id', 'client_id');
     }
 }

@@ -8,6 +8,7 @@ use Auth;
 use App\Players;
 use App\Deposits;
 use App\User;
+use App\Apps;
 
 class WithdrawalCtrl extends Controller
 {
@@ -22,6 +23,12 @@ class WithdrawalCtrl extends Controller
         return withdrawal::where('status', '=', 'waiting review')->count();
     }
 
+    public function IndexPost(Request $request)
+    {
+        return redirect('withdrawals/'.$request->filter);
+
+    }
+
     protected function index($filter = null)
     {
         if (Auth::user()->can('withdrawals.list')) {
@@ -30,6 +37,9 @@ class WithdrawalCtrl extends Controller
 
             $data["withdrawals"] = $this->getWithdrawals($filter);
             $data["withdrawals"] = $m_Deposits->helper->searchWebsites($data["withdrawals"], true);
+            $data['filter'] = $filter;
+            $data['apps'] = Apps::all();
+
 
             return view('modules/withdrawals/withdrawals')->with($data);
 

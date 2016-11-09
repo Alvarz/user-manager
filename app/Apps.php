@@ -21,6 +21,6 @@ class Apps extends Model
    * @var array
    */
     protected $hidden = [
-      'api_token','client_id'
+      'api_token'
     ];
 }

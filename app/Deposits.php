@@ -6,6 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deposits extends Model
 {
+    /*
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
+    protected $fillable = [
+     'id', 'name', 'client_id'
+    ];
+
+    /**
+  * The attributes that should be hidden for arrays.
+  *
+  * @var array
+  */
+    protected $hidden = [
+     'api_token'
+    ];
+
+    
     public $helper;
     public $jsonHelper;
 

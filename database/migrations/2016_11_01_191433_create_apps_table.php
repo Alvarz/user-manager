@@ -18,6 +18,8 @@ class CreateAppsTable extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->string('api_token', 60)->unique();
+                $table->bigInteger('client_id')->unsigned()->unique();
+                $table->string('url');
                 $table->timestamps();
             }
         );

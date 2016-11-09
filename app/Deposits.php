@@ -24,7 +24,7 @@ class Deposits extends Model
      'api_token'
     ];
 
-    
+
     public $helper;
     public $jsonHelper;
 
@@ -56,5 +56,11 @@ class Deposits extends Model
     public function GetPaymentMethods()
     {
         return $this->jsonHelper->Get("dgsapi.php?db&sp=PaymentMethod_GetList", true);
+    }
+
+
+    public function App()
+    {
+        return $this->hasOne('App\Apps', 'client_id', 'client_id');
     }
 }

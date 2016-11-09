@@ -88,6 +88,9 @@
                 <table class="table table-striped" >
                   <thead>
                     <tr>
+                      <th>
+                      website
+                      </th>
                     <th>
                       Player
                     </th>
@@ -110,6 +113,9 @@
                   </thead>
                   <tbody>
                     <tr>
+                      <td>
+                      {{$appName}}
+                      </td>
                     <td>
                       {{$playerInfo->Player}}
                     </td>

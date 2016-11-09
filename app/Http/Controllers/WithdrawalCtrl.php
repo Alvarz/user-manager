@@ -26,7 +26,11 @@ class WithdrawalCtrl extends Controller
     {
         if (Auth::user()->can('withdrawals.list')) {
 
+            $m_Deposits = new Deposits();
+
             $data["withdrawals"] = $this->getWithdrawals($filter);
+            $data["withdrawals"] = $m_Deposits->helper->searchWebsites($data["withdrawals"], true);
+
             return view('modules/withdrawals/withdrawals')->with($data);
 
         }else{
@@ -41,6 +45,8 @@ class WithdrawalCtrl extends Controller
 
             $m_Players = new Players();
             $m_Deposits = new Deposits();
+
+            $data['appName'] = withdrawal::find($IdDepost)->App->name;
 
             $data['withdrawal'] = withdrawal::findOrFail($IdDepost);
             $data['playerInfo'] = $m_Players->GetPlayerData($data['withdrawal']->IdPlayer);

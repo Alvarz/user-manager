@@ -13,7 +13,6 @@ class DepositsCtrl extends Controller
 {
 
 
-
     public function __construct()
     {
 
@@ -29,7 +28,11 @@ class DepositsCtrl extends Controller
     {
         if (Auth::user()->can('deposits.list')) {
 
+            $m_Deposits = new Deposits();
+
             $data["deposits"] = $this->getDeposits($filter);
+            $data["deposits"] = $m_Deposits->helper->searchWebsites($data["deposits"]);
+
             return view('modules/deposits/deposits')->with($data);
 
         }else{
@@ -37,12 +40,16 @@ class DepositsCtrl extends Controller
         }
     }
 
+
     protected function depositDetails($IdDepost)
     {
         if (Auth::user()->can('deposits.list')) {
 
             $m_Players = new Players();
             $m_Deposits = new Deposits();
+
+            $data['appName'] = Deposits::find($IdDepost)->App->name;
+            // dd($app->name);
 
             $data['deposit'] = Deposits::findOrFail($IdDepost);
             $data['playerInfo'] = $m_Players->GetPlayerData($data['deposit']->IdPlayer);

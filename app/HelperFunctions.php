@@ -6,6 +6,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use App\Deposits;
+use App\withdrawal;
+
 
 class HelperFunctions extends Model
 {
@@ -247,6 +250,17 @@ class HelperFunctions extends Model
         return $ObjData;
 
     }
+
+    public function searchWebsites($data, $isWithdrawal = false)
+    {
+        foreach ($data as $key => $value) {
+
+            $data[$key]->appName = ($isWithdrawal) ? withdrawal::find($value->id)->App->name : Deposits::find($value->id)->App->name;
+
+        }
+        return $data;
+    }
+
 
     public function Paginator($item_per_page, $paginationArray, $url, $type = "none")
     {

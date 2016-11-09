@@ -24,6 +24,9 @@
                   <thead>
                     <tr>
                       <th>
+                        Website
+                      </th>
+                      <th>
                         Name
                       </th>
                       <th>
@@ -46,6 +49,9 @@
                   <tbody>
                     @foreach($deposits as $deposit)
                       <tr style="cursor:pointer" onclick="window.location='/deposits/details/{{$deposit->id}}'">
+                        <td>
+                          {{$deposit->appName}}
+                        </td>
                         <td>
                           {{$deposit->name}}
                         </td>

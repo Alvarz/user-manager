@@ -70,7 +70,7 @@ class WithdrawalCtrl extends Controller
                 $data['PlayerBalance'] = $this->ManagePlayerBalanceData($data['PlayerBalance']);
             }
 
-            if ($data['withdrawal']->status == 'verified') {
+            if ($data['withdrawal']->status == 'verified' || $data['withdrawal']->status == 'rejected') {
 
                 $data['user'] = withdrawal::find($IdWithdrawal)->UserReviewed;
 
@@ -121,6 +121,8 @@ class WithdrawalCtrl extends Controller
 
             }else{
                 $resTrasaction = true;
+                $Withdrawal->IdUser_reviewed = Auth::user()->id;
+                $Withdrawal->reviewed_at =  Carbon::now();
             }
 
             $Withdrawal->status = $status;

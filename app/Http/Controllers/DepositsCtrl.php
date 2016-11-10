@@ -71,12 +71,12 @@ class DepositsCtrl extends Controller
                 $data['PlayerBalance'] = $this->ManagePlayerBalanceData($data['PlayerBalance']);
             }
 
-            if ($data['deposit']->status == 'verified') {
+            if ($data['deposit']->status == 'verified' || $data['deposit']->status == 'rejected') {
 
                 $data['user'] = Deposits::find($IdDepost)->UserReviewed;
 
             }elseif ($data['deposit']->status == 'approved') {
-              
+
                 $data['user'] = Deposits::find($IdDepost)->UserReviewed;
                 $data['userApproved'] = Deposits::find($IdDepost)->UserApproved;
 
@@ -123,6 +123,8 @@ class DepositsCtrl extends Controller
 
             }else{
                 $resTrasaction = true;
+                $Deposit->IdUser_reviewed = Auth::user()->id;
+                $Deposit->reviewed_at =  Carbon::now();
             }
 
 

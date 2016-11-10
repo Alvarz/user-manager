@@ -158,8 +158,15 @@
                     <p>
                       <strong>voucher image</strong>
                     </p>
-                      <img src="{{$deposit->voucher_img}}" alt="voucher_img" />
+                    <a href="#img1">
+                      <img src="{{$deposit->voucher_img}}" class="thumbnail" alt="voucher_img" />
+                    </a>
                   </div>
+
+                  <!-- lightbox container hidden with CSS -->
+                  <a href="#_" class="lightbox" id="img1">
+                  <img src="{{$deposit->voucher_img}}">
+                  </a>
 
                   @if($deposit->status == 'waiting' || $deposit->status == 'verified')
 

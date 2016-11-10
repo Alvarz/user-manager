@@ -29,7 +29,7 @@ class DepositsSeeder extends Seeder
                 'bank' => $faker->company,
                 'amount' => $faker->numberBetween($min = 50, $max = 100),
                 'transaction_type' => 'bank',
-                'voucher_img' => 'http://placehold.it/350x150',
+                'voucher_img' => 'http://placehold.it/650x350',
                 'voucher_number' => $faker->creditCardNumber,
                 'origin_bank' => $faker->company,
                 'status' => 'waiting',

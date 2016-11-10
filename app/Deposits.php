@@ -63,4 +63,14 @@ class Deposits extends Model
     {
         return $this->belongsTo('App\Apps', 'client_id', 'client_id');
     }
+
+    public function UserReviewed()
+    {
+        return $this->belongsTo('App\User', 'IdUser_reviewed', 'id');
+    }
+
+    public function UserApproved()
+    {
+        return $this->belongsTo('App\User', 'IdUser_approved', 'id');
+    }
 }

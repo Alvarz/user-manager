@@ -169,6 +169,33 @@
                       </div>
                     @endcan
                   @endif
+                  @if($withdrawal->status == 'approved')
+                  <div class="col-sm-6 col-xs-12">
+                      <h3>Approval info</h3>
+                    <table class="table table-striped table-border">
+                      <thead>
+                        <tr>
+                          <th>
+                            approved by
+                          </th>
+                          <th>
+                            date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            {{$userApproved->name}}
+                          </td>
+                          <td>
+                            {{$withdrawal->reviewed_at}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  @endif
                     @if($withdrawal->status != 'waiting')
                       <div class="col-sm-6 col-xs-12">
                           <h3>Review info</h3>

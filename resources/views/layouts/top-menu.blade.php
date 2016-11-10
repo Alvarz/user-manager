@@ -92,7 +92,7 @@
                         <li>
                             <a href="{{ url('/withdrawals/verified') }}">
 
-                              Withdrawals waiting
+                              Withdrawals verified
                               @if($Withdrawal->GetWaitingWithdrawalsCount('verified') > 0)
                                 <span class="badge badge-info">{{$Withdrawal->GetWaitingWithdrawalsCount('verified')}}</span>
                               @endif

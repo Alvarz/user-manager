@@ -8,9 +8,9 @@ $(document).on('click', '.statusBtn', function(e) {
   var param = '/' + id + '/' + IdPlayer + '/' + Status + '/' + PayMethod;
   console.log(url);
   AjaxWithToken(url, param, '', 'PUT', function() {
-    // setTimeout(function() {
-    //   location.reload();
-    // }, 3000);
+    setTimeout(function() {
+      location.reload();
+    }, 3000);
   });
 });
 

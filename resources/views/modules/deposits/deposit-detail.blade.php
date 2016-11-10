@@ -190,6 +190,33 @@
                       </div>
                     @endcan
                   @endif
+                  @if($deposit->status == 'approved')
+                  <div class="col-sm-6 col-xs-12">
+                      <h3>Approval info</h3>
+                    <table class="table table-striped table-border">
+                      <thead>
+                        <tr>
+                          <th>
+                            Approved by
+                          </th>
+                          <th>
+                            date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            {{$userApproved->name}}
+                          </td>
+                          <td>
+                            {{$deposit->reviewed_at}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  @endif
                   @if($deposit->status != 'waiting')
                   <div class="col-sm-6 col-xs-12">
                       <h3>Review info</h3>
@@ -217,6 +244,7 @@
                     </table>
                   </div>
                   @endif
+
                 </div>
               </div>
             </div>

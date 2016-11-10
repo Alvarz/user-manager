@@ -26,11 +26,15 @@ class CreateDepositsTable extends Migration
                 $table->string('origin_bank');
                 $table->string('status');
                 $table->string('IdPlayer');
-                $table->string('IdUser_reviewed')->nullable();
+                $table->integer('IdUser_reviewed')->nullable()->unsigned();
+                $table->integer('IdUser_approved')->nullable()->unsigned();
                 $table->string('payment_method')->nullable();
                 $table->bigInteger('client_id')->unsigned();
+                $table->timestamp('reviewed_at')->nullable();
                 $table->timestamps();
 
+                $table->foreign('IdUser_approved')->references('id')->on('users');
+                $table->foreign('IdUser_reviewed')->references('id')->on('users');
                 $table->foreign('client_id')->references('client_id')->on('apps');
 
             }

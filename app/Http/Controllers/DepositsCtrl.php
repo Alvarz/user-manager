@@ -71,12 +71,16 @@ class DepositsCtrl extends Controller
                 $data['PlayerBalance'] = $this->ManagePlayerBalanceData($data['PlayerBalance']);
             }
 
-            if ($data['deposit']->status != 'waiting') {
+            if ($data['deposit']->status == 'verified') {
 
-                $data['user'] = User::findOrFail($data['deposit']->IdUser_reviewed);
+                $data['user'] = Deposits::find($IdDepost)->UserReviewed;
+
+            }elseif ($data['deposit']->status == 'approved') {
+              
+                $data['user'] = Deposits::find($IdDepost)->UserReviewed;
+                $data['userApproved'] = Deposits::find($IdDepost)->UserApproved;
 
             }
-            // dd($data);
 
             return view('modules/deposits/deposit-detail')->with($data);
 
@@ -97,6 +101,8 @@ class DepositsCtrl extends Controller
 
             if ($status == 'verified' && $Deposit->status == 'waiting') {
 
+                $Deposit->IdUser_reviewed = Auth::user()->id;
+                $Deposit->reviewed_at =  Carbon::now();
                 $Deposit->payment_method = $payment_method;
                 $params = $this->SetArrayDataTransaction($Deposit);
                 $response = Deposits::AddPlayerTransaction($params);
@@ -106,6 +112,11 @@ class DepositsCtrl extends Controller
                     return  $this->retornarError('there was an error', $response);
                 }
 
+            }elseif($status == 'approved' && $Deposit->status == 'verified') {
+
+                $Deposit->IdUser_approved = Auth::user()->id;
+
+
             }elseif($status == 'verified' && $Deposit->status != 'waiting') {
 
                 return  $this->retornarError('error this deposit was already verified by another user', $Deposit);
@@ -114,9 +125,8 @@ class DepositsCtrl extends Controller
                 $resTrasaction = true;
             }
 
+
                 $Deposit->status = $status;
-                $Deposit->IdUser_reviewed = Auth::user()->id;
-                $Deposit->payment_method = $payment_method;
 
 
 

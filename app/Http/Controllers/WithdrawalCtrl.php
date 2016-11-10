@@ -9,6 +9,7 @@ use App\Players;
 use App\Deposits;
 use App\User;
 use App\Apps;
+use Carbon\Carbon;
 
 class WithdrawalCtrl extends Controller
 {
@@ -49,16 +50,16 @@ class WithdrawalCtrl extends Controller
     }
 
 
-    protected function withdrawalsDetails($IdDepost)
+    protected function withdrawalsDetails($IdWithdrawal)
     {
         if (Auth::user()->can('withdrawals.list')) {
 
             $m_Players = new Players();
             $m_Deposits = new Deposits();
 
-            $data['appName'] = withdrawal::find($IdDepost)->App->name;
+            $data['appName'] = withdrawal::find($IdWithdrawal)->App->name;
 
-            $data['withdrawal'] = withdrawal::findOrFail($IdDepost);
+            $data['withdrawal'] = withdrawal::findOrFail($IdWithdrawal);
             $data['playerInfo'] = $m_Players->GetPlayerData($data['withdrawal']->IdPlayer);
             $data['playerInfo'] = $m_Players->helper->setFloatValuesAndFormatDatesForObj($data['playerInfo'])[0];
             $data['PlayerBalance'] = $m_Players->GetPlayerBalance($data['withdrawal']->IdPlayer, $data['playerInfo']->IdCurrency);
@@ -69,9 +70,14 @@ class WithdrawalCtrl extends Controller
                 $data['PlayerBalance'] = $this->ManagePlayerBalanceData($data['PlayerBalance']);
             }
 
-            if ($data['withdrawal']->status != 'waiting') {
+            if ($data['withdrawal']->status == 'verified') {
 
-                $data['user'] = User::findOrFail($data['withdrawal']->IdUser_reviewed);
+                $data['user'] = withdrawal::find($IdWithdrawal)->UserReviewed;
+
+            }elseif ($data['withdrawal']->status == 'approved') {
+
+                $data['user'] = withdrawal::find($IdWithdrawal)->UserReviewed;
+                $data['userApproved'] = withdrawal::find($IdWithdrawal)->UserApproved;
 
             }
             // dd($data);
@@ -92,6 +98,8 @@ class WithdrawalCtrl extends Controller
 
             if ($status == 'verified' && $Withdrawal->status == 'waiting' ) {
 
+                $Withdrawal->IdUser_reviewed = Auth::user()->id;
+                $Withdrawal->reviewed_at =  Carbon::now();
                 $Withdrawal->payment_method = $payment_method;
                 $params = $this->SetArrayDataTransaction($Withdrawal);
                 $response = Deposits::AddPlayerTransaction($params);
@@ -100,6 +108,12 @@ class WithdrawalCtrl extends Controller
                 if (!$resTrasaction) {
                     return  $this->retornarError('there was an error', $response);
                 }
+
+            }elseif($status == 'approved' && $Withdrawal->status == 'verified') {
+
+                $Withdrawal->IdUser_approved = Auth::user()->id;
+
+
 
             }elseif($status == 'verified' && $Withdrawal->status != 'waiting') {
 
@@ -110,7 +124,7 @@ class WithdrawalCtrl extends Controller
             }
 
             $Withdrawal->status = $status;
-            $Withdrawal->IdUser_reviewed = Auth::user()->id;
+
 
 
 

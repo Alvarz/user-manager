@@ -95,18 +95,29 @@ class DepositsCtrl extends Controller
 
             $Deposit = Deposits::findOrFail($IdDepost);
 
-            $Deposit->status = $status;
-            $Deposit->IdUser_reviewed = Auth::user()->id;
-            $Deposit->payment_method = $payment_method;
+            if ($status == 'verified' && $Deposit->status == 'waiting') {
 
-            if ($status == 'verified') {
-
+                $Deposit->payment_method = $payment_method;
                 $params = $this->SetArrayDataTransaction($Deposit);
-                $resTrasaction = empty(Deposits::AddPlayerTransaction($params));
+                $response = Deposits::AddPlayerTransaction($params);
+                $resTrasaction = empty($response);
+
+                if (!$resTrasaction) {
+                    return  $this->retornarError('there was an error', $response);
+                }
+
+            }elseif($status == 'verified' && $Deposit->status != 'waiting') {
+
+                return  $this->retornarError('error this deposit was already verified by another user', $Deposit);
 
             }else{
                 $resTrasaction = true;
             }
+
+                $Deposit->status = $status;
+                $Deposit->IdUser_reviewed = Auth::user()->id;
+                $Deposit->payment_method = $payment_method;
+
 
 
             if ($Deposit->save() && $resTrasaction) {
@@ -114,22 +125,19 @@ class DepositsCtrl extends Controller
                 'type' => 'alert-success',
                 'msg' => 'the status has been updated',
                 'data' => $Deposit,
-                    );
-            }else{
-                return array(
-                'type' => 'alert-danger',
-                'msg' => 'error updating status',
-                'data' => $Deposit,
                 );
+            }else{
+                return $this->retornarError();
             }
+
         }else{
-            return array(
-            'type' => 'alert-danger',
-            'msg' => 'you cannot perform that action',
-            'data' => '',
-            );
+
+            return $this->retornarError('you cannot perform that action');
+
         }
     }
+
+
 
     protected function store(request $request)
     {
@@ -228,6 +236,15 @@ class DepositsCtrl extends Controller
           'prmOutIdTransaction' =>  0
                 );
 
+    }
+
+    private function retornarError($msg = 'error updating status', $data='')
+    {
+        return array(
+        'type' => 'alert-danger',
+        'msg' => $msg,
+        'data' => $data,
+        );
     }
 
 }

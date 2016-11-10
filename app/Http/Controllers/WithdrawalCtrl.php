@@ -88,21 +88,30 @@ class WithdrawalCtrl extends Controller
 
         if (Auth::user()->can('withdrawals.edit')) {
 
-
             $Withdrawal = withdrawal::findOrFail($IdWithdrawal);
 
-            $Withdrawal->status = $status;
-            $Withdrawal->IdUser_reviewed = Auth::user()->id;
-            $Withdrawal->payment_method = $payment_method;
+            if ($status == 'verified' && $Withdrawal->status == 'waiting' ) {
 
-            if ($status == 'verified') {
-
+                $Withdrawal->payment_method = $payment_method;
                 $params = $this->SetArrayDataTransaction($Withdrawal);
-                $resTrasaction = empty(Deposits::AddPlayerTransaction($params));
+                $response = Deposits::AddPlayerTransaction($params);
+                $resTrasaction = empty($response);
+
+                if (!$resTrasaction) {
+                    return  $this->retornarError('there was an error', $response);
+                }
+
+            }elseif($status == 'verified' && $Withdrawal->status != 'waiting') {
+
+                return  $this->retornarError('error this Withdrawal was already verified by another user', $Withdrawal);
 
             }else{
                 $resTrasaction = true;
             }
+
+            $Withdrawal->status = $status;
+            $Withdrawal->IdUser_reviewed = Auth::user()->id;
+
 
 
             if ($Withdrawal->save() && $resTrasaction) {
@@ -112,18 +121,10 @@ class WithdrawalCtrl extends Controller
                     'data' => $Withdrawal,
                     );
             }else{
-                    return array(
-                    'type' => 'alert-danger',
-                    'msg' => 'error updating status',
-                    'data' => $Withdrawal,
-                    );
+                  return $this->retornarError();
             }
         }else{
-            return array(
-            'type' => 'alert-danger',
-            'msg' => 'you cannot perform that action',
-            'data' => '',
-            );
+            return $this->retornarError('you cannot perform that action');
         }
     }
 
@@ -225,5 +226,14 @@ class WithdrawalCtrl extends Controller
           'prmOutIdTransaction' =>  0
                 );
 
+    }
+
+    private function retornarError($msg = 'error updating status', $data='')
+    {
+        return array(
+        'type' => 'alert-danger',
+        'msg' => $msg,
+        'data' => $data,
+        );
     }
 }

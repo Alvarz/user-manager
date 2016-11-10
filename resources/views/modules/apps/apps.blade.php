@@ -9,7 +9,7 @@
         <div class="col-md-8 col-md-offset-2 col-xs-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                $apps list
+                Apps list
               </div>
               <div class="panel-body">
                 <table class="table table-striped" >

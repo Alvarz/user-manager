@@ -14,7 +14,7 @@ class AppsCtrl extends Controller
 
     }
 
-    protected function index()
+    public function index()
     {
         if (Auth::user()->can('app.list')) {
 
@@ -65,8 +65,8 @@ class AppsCtrl extends Controller
                 [
                 'name' => $request['name'],
                 'url' => $request['url'],
-                'client_id' => uniqid(),
-                'api_token' => $this->MakeDBId(),
+                'client_id' => uniqid().'-'.uniqid(),
+                'api_token' => $this->MakeDBId().'-'.$this->MakeDBId(),
 
                 ]
             );
@@ -93,7 +93,7 @@ class AppsCtrl extends Controller
 
     }
 
-    protected function update($idRole, request $request)
+    protected function update($idApp, request $request)
     {
 
         if (Auth::user()->can('app.edit')) {
@@ -106,7 +106,7 @@ class AppsCtrl extends Controller
                 ]
             );
 
-            $Apps = Apps::findOrFail($idRole);
+            $Apps = Apps::findOrFail($idApp);
 
             $Apps->name = $request['name'];
             $Apps->url = $request['url'];

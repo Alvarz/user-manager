@@ -21,7 +21,6 @@ class DepositsCtrl extends Controller
 
     static function GetWaitingDepositsCount($filter = 'waiting')
     {
-
         return Deposits::where('status', '=', $filter)->count();
     }
 

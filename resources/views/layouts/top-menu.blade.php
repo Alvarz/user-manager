@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Cashier') }}
+                {{ config('app.name', 'Agent-backoffice') }}
             </a>
         </div>
 
@@ -29,83 +29,7 @@
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @else
-                @can('deposits.list')
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                      @inject('deposit', 'App\Http\Controllers\DepositsCtrl')
-
-                      @if($deposit->GetWaitingDepositsCount() > 0 || $deposit->GetWaitingDepositsCount('verified') > 0)
-                        <span class="badge badge-danger"><i class="glyphicon glyphicon-asterisk" ></i></span>
-                      @endif Deposits <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                      @can('deposits.edit.waiting')
-                        <li>
-                            <a href="{{ url('/deposits/waiting') }}">
-
-                              Deposits waiting
-                              @if($deposit->GetWaitingDepositsCount() > 0)
-                                <span class="badge badge-warning">{{$deposit->GetWaitingDepositsCount()}}</span>
-                              @endif
-                            </a>
-                        </li>
-                      @endcan
-                      @can('deposits.edit.verified')
-                      <li>
-                          <a href="{{ url('/deposits/verified') }}">
-
-                            Deposits verified
-                            @if($deposit->GetWaitingDepositsCount('verified') > 0)
-                              <span class="badge badge-info">{{$deposit->GetWaitingDepositsCount('verified')}}</span>
-                            @endif
-                          </a>
-                      </li>
-                      @endcan
-                      <li>
-                        <a href="{{ url('/deposits/all') }}">Deposits list</a>
-                      </li>
-                    </ul>
-                  </li>
-                @endcan
-                @can('withdrawals.list')
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="{{ url('/withdrawals') }}">
-                    @inject('Withdrawal', 'App\Http\Controllers\WithdrawalCtrl')
-
-                    @if($Withdrawal->GetWaitingWithdrawalsCount() > 0 || $Withdrawal->GetWaitingWithdrawalsCount('verified') > 0)
-                      <span class="badge badge-danger"><i class="glyphicon glyphicon-asterisk"></i></span>
-                    @endif Withdrawals <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                      @can('withdrawals.edit.waiting')
-                        <li>
-                            <a href="{{ url('/withdrawals/waiting') }}">
-
-                              Withdrawals waiting
-                              @if($Withdrawal->GetWaitingWithdrawalsCount() > 0)
-                                <span class="badge badge-warning">{{$Withdrawal->GetWaitingWithdrawalsCount()}}</span>
-                              @endif
-                            </a>
-                        </li>
-                      @endcan
-                      @can('withdrawals.edit.verified')
-                        <li>
-                            <a href="{{ url('/withdrawals/verified') }}">
-
-                              Withdrawals verified
-                              @if($Withdrawal->GetWaitingWithdrawalsCount('verified') > 0)
-                                <span class="badge badge-info">{{$Withdrawal->GetWaitingWithdrawalsCount('verified')}}</span>
-                              @endif
-                            </a>
-                        </li>
-                      @endcan
-                      <li>
-                        <a href="{{ url('/withdrawals/all') }}">withdrawals list</a>
-                      </li>
-                    </ul>
-                  </li>
-                @endcan
-                @canatleast(['permission.list', 'role.list', 'user.list', 'app.list'])
+                @canatleast(['permission.list', 'role.list', 'user.list'])
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                           Admin area <span class="caret"></span>
@@ -124,11 +48,6 @@
                           @can('user.list')
                             <li>
                                 <a href="{{url('/users')}}">users</a>
-                            </li>
-                          @endcan
-                          @can('app.list')
-                            <li>
-                                <a href="{{url('/apps')}}">apps</a>
                             </li>
                           @endcan
                       </ul>

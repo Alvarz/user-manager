@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Cashier') }}</title>
+    <title>{{ config('app.name', 'Agent-backoffice') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">

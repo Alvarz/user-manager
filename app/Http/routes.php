@@ -83,39 +83,3 @@ Route::post('/assignrole/{idUsers}', 'RolesCtrl@assignRolePermissions');
 //revoke
 Route::delete('/revokeRole/{idUser}/{idrole}', 'RolesCtrl@revokeRolePermissions');
 Route::delete('/revoleallroles/{idUser}', 'RolesCtrl@revokeAllPermissions');
-
-
-/*******************************************************/
-//**********************USERS*****************************
-/********************************************************/
-Route::get('/apps', 'AppsCtrl@index');
-Route::get('/apps/create', 'AppsCtrl@create');
-Route::get('/apps/edit/{idApp}', 'AppsCtrl@edit');
-
-// AjaxCalls
-Route::post('/apps', 'AppsCtrl@store');
-Route::put('/apps/{idApp}', 'AppsCtrl@update');
-Route::delete('/apps/{idApp}', 'AppsCtrl@remove');
-
-
-/*******************************************************/
-//**********************DEPOSITS*****************************
-/********************************************************/
-Route::get('/deposits/details/{IdDeposit}', 'DepositsCtrl@depositDetails')->where('IdDeposit', '[0-9]+');
-Route::get('/deposits/{filter}/{page?}', 'DepositsCtrl@index');
-
-
-Route::post('/deposits', 'DepositsCtrl@IndexPost');
-
-Route::put('/deposits/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'DepositsCtrl@update');
-
-/*******************************************************/
-//**********************WITHDRAWAL*****************************
-/********************************************************/
-Route::get('/withdrawals/details/{IdWithdrawal}', 'WithdrawalCtrl@withdrawalsDetails')->where('IdWithdrawal', '[0-9]+');
-Route::get('/withdrawals/{filter}/{page?}', 'WithdrawalCtrl@index');
-
-
-Route::post('/withdrawals', 'WithdrawalCtrl@IndexPost');
-
-Route::put('/withdrawals/{IdDeposit}/{IdPlayer}/{status}/{payment_method}', 'WithdrawalCtrl@update');

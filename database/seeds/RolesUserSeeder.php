@@ -16,8 +16,6 @@ class RolesUserSeeder extends Seeder
         $role = DB::table('roles')->where('slug', '=', 'admin.super')->get();
         $user = DB::table('users')->where('name', '=', 'admin')->get();
 
-        $_role = DB::table('roles')->where('slug', '=', 'admin.default')->get();
-        $_user = DB::table('users')->where('name', '=', 'administrator')->get();
 
             DB::table('role_user')->insert(
                 [
@@ -27,16 +25,6 @@ class RolesUserSeeder extends Seeder
                 'updated_at' => Carbon::now()
                 ]
             );
-
-            DB::table('role_user')->insert(
-                [
-                'role_id' => $_role[0]->id,
-                'user_id' => $_user[0]->id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-                ]
-            );
-
 
     }
 }

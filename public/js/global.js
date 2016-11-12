@@ -1,110 +1,16 @@
-$(document).on('click', '.statusBtn', function(e) {
+$(document).on('change', '#states', function(e) {
   e.preventDefault;
-  var id = $(this).data('id');
-  var IdPlayer = $(this).data('idplayer');
-  var Status = $(this).data('status');
-  var PayMethod = $('#PayMethod').val();
-  var url = (typeof $(this).data('url') == 'undefined') ? '/deposits' : '/' + $(this).data('url');
-  var param = '/' + id + '/' + IdPlayer + '/' + Status + '/' + PayMethod;
+  var idProperty = $(this).data('id');
+  var State = $('#states').val();
+  var url = '/' + $(this).data('url');
+  var param = '/' + idProperty + '/' + State;
   console.log(url);
   AjaxWithToken(url, param, '', 'PUT', function() {
-    setTimeout(function() {
-      location.reload();
-    }, 3000);
+    // setTimeout(function() {
+    //   location.reload();
+    // }, 3000);
   });
 });
-
-
-$(document).on('click', '.revokeAll', function(e) {
-  e.preventDefault;
-  var id = '/' + $(this).data('id');
-  var url = '/' + $(this).data('url');
-
-  AjaxWithToken(url, id, '', 'DELETE', function() {
-    setTimeout(function() {
-      location.reload();
-    }, 3000);
-  });
-  return false;
-})
-
-$(document).on('submit', '#assign', function(e) {
-  e.preventDefault;
-  var url = '/' + $('#url').val();
-  var id = '/' + $('#id').val();
-  var data = $(this).serialize();
-  AjaxCalls(url, id, data, 'POST', function() {
-    setTimeout(function() {
-      location.reload();
-    }, 3000);
-  });
-  return false;
-});
-
-$(document).on("click", '.revoke', function(e) {
-
-  e.preventDefault;
-  var r = confirm("You really want to revoke this permission?");
-
-  if (r == true) {
-
-    var url = '/' + $(this).data('url');
-    var idElement = '/' + $(this).data('idelement');
-    var idToRevoke = '/' + $(this).data('idtorevoke');
-    var param = idElement + idToRevoke;
-
-    AjaxWithToken(url, param, '', 'DELETE', function() {
-      setTimeout(function() {
-        location.reload();
-      }, 3000);
-    });
-
-  }
-  return false;
-});
-
-$(document).on("click", '.delete', function(e) {
-
-  e.preventDefault;
-  var r = confirm("You really want to delete this element?");
-
-  if (r == true) {
-
-    var url = '/' + $(this).data('url');
-    var id = '/' + $(this).data('id');
-    AjaxWithToken(url, id, '', 'DELETE', function() {
-      setTimeout(function() {
-        location.reload();
-      }, 3000);
-    });
-
-  }
-  return false;
-});
-
-
-$(document).on('submit', '#creator', function(e) {
-
-  e.preventDefault;
-  var url = '/' + $('#url').val();
-  var data = $(this).serialize();
-
-  AjaxCalls(url, '', data, 'POST');
-
-  return false;
-});
-
-$(document).on('submit', '#update', function(e) {
-
-  e.preventDefault;
-  var id = '/' + $("#id").val();
-  var url = '/' + $("#url").val();
-  var data = $(this).serialize();
-  AjaxCalls(url, id, data, 'PUT');
-
-  return false;
-});
-
 
 var abortAjax = '';
 

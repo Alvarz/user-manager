@@ -83,3 +83,11 @@ Route::post('/assignrole/{idUsers}', 'RolesCtrl@assignRolePermissions');
 //revoke
 Route::delete('/revokeRole/{idUser}/{idrole}', 'RolesCtrl@revokeRolePermissions');
 Route::delete('/revoleallroles/{idUser}', 'RolesCtrl@revokeAllPermissions');
+
+/*******************************************************/
+//**********************PROPERTIES*****************************
+/********************************************************/
+Route::get('/properties', 'PropertiesCtrl@index');
+Route::get('/properties/{idProperty}', 'PropertiesCtrl@details');
+
+Route::put('/property/updateState/{idProperty}/{state}', 'PropertiesCtrl@updateState');

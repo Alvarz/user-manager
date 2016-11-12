@@ -83,36 +83,15 @@ class HelperFunctions extends Model
     }
 
 
-    /**
-   * data to CRM
-   *
-   *  @param  method string
-   *  @param  params string
-   *  @param  url string
-   *  @return stiring or json
-   */
-    public function CallToCRM($method, $parameters, $url)
-    {
-        $jsonEncodedData = json_encode($parameters);
-
-        $post = array(
-         "method" => $method,
-         "input_type" => "JSON",
-         "response_type" => "JSON",
-         "rest_data" => $jsonEncodedData
-         );
-
-         $request = new Request($method, $url);
-         $res = $client->send($request, $post);
-         $data = $res->getBody();
-
-         $result = explode("\r\n\r\n", $data->getContents(), 2);
-         $response = json_decode($result[1]);
-         ob_end_flush();
-
-         return $response;
-
-    }
+  public function responseJson($msg, $status=true)
+  {
+    $type = ($status) ? 'alert-success' : 'alert-error';
+    return array(
+      'status' => $status,
+      'type' => $type,
+      'msg' => $msg
+    );
+  }
 
     /**
    * Display a listing of the resource.

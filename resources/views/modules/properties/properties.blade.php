@@ -9,65 +9,54 @@
         <div class="col-md-8 col-md-offset-2 col-xs-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                Apps list
+                Properties list
               </div>
               <div class="panel-body">
                 <table class="table table-striped" >
                   <thead>
                     <tr>
                       <th>
-                        client id
+                        Title
                       </th>
                       <th>
-                        Name
+                        address
                       </th>
                       <th>
-                        api_token
+                        State
                       </th>
                       <th>
-                        url
+                        Details
                       </th>
-                      @canatleast(['app.edit', 'app.delete'])
-                      <th>
-                        action
-                      </th>
-                        @endcanatleast
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($apps as $app)
+                    @foreach($properties as $property)
                       <tr>
                         <td>
-                          {{$app->client_id}}
+                          {{$property->title}}
                         </td>
                         <td>
-                          {{$app->name}}
+                          {{$property->address}}
                         </td>
                         <td>
-                          {{$app->api_token}}
+                          @if($property->state->name == 'En revisión')
+                            <span class="label label-warning">{{$property->state->name}}</span>
+                          @elseif($property->state->name == 'Activo')
+                            <span class="label label-success">{{$property->state->name}}</span>
+                          @else
+                            <span class="label label-danger">{{$property->state->name}}</span>
+                          @endif
                         </td>
                         <td>
-                          {{$app->url}}
+                          <a class="btn btn-info btn-sm" href="/properties/{{$property->id}}">Details</a>
                         </td>
-                        @canatleast(['app.edit', 'app.delete'])
-                          <td>
-                            @can('app.edit')
-                              <a href="/apps/edit/{{$app->id}}" class="btn btn-info" >edit</a>
-                            @endcan
-                            @can('app.delete')
-                              <a href="#"  data-id="{{$app->id}}" data-url="apps" class="btn btn-danger delete" >delete</a>
-                            @endcan
-                          </td>
-                          @endcanatleast
                       </tr>
                     @endforeach
                   </tbody>
                 </table>
               </div>
               <div class="panel-footer">
-                @can('app.add')
-                <a href="/apps/create" class="btn btn-info">Add new app</a>
-                @endcan
+                {{$properties->links()}}
               </div>
             </div>
         </div>

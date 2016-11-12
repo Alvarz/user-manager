@@ -22,6 +22,8 @@ class CreatePropertiesTable extends Migration
             $table->string('country');
             $table->integer('state_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('state_id')->references('id')->on('states');
         });
     }
 

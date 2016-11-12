@@ -12,12 +12,12 @@ class facilitiesTableSeeder extends Seeder
      */
     public function run()
     {
-      $arrayStates = ['En revisión','Activo','Inactivo'];
+      $arrayFacilities = ['Edificio con ascensor','Piscina','Estacionamiento', 'Cocina', 'Aire acondicionado', 'Calefacción'];
 
-      foreach ($arrayStates as $stateName) {
-        DB::table('states')->insert(
+      foreach ($arrayFacilities as $facilitie) {
+        DB::table('facilities')->insert(
             [
-            'name' => $stateName,
+            'name' => $facilitie,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
             ]

@@ -12,18 +12,16 @@ class stateTableSeeder extends Seeder
      */
     public function run()
     {
+      $arrayStates = ['En revisión','Activo','Inactivo'];
 
-      $arrayFacilities = ['Edificio con ascensor','Piscina','Estacionamiento', 'Cocina', 'Aire acondicionado', 'Calefacción'];
-
-      foreach ($arrayFacilities as $facilitie) {
-        DB::table('facilities')->insert(
+      foreach ($arrayStates as $stateName) {
+        DB::table('states')->insert(
             [
-            'name' => $facilitie,
+            'name' => $stateName,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
             ]
         );
       }
-
     }
 }

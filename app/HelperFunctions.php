@@ -13,10 +13,8 @@ use App\withdrawal;
 class HelperFunctions extends Model
 {
     private  $client;
-    private $ProxyDomain = "http://dgsproxy.asbnap.com/apps/DgsApi/"; //public
-    private $ProxyDomain2 = "http://190.120.242.107/api/"; //public
-    // private $ProxyDomain = "http://192.168.1.8:83"; // internal
-    // private $ProxyDomain2 = "http://192.168.1.13/api/"; // internal
+    private $ProxyDomain = ""; //public
+    private $ProxyDomain2 = ""; //public
 
     /**
  * constructor method

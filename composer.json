@@ -8,8 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
 	"caffeinated/shinobi": "*",
-        "guzzlehttp/guzzle": "*",
-        "maatwebsite/excel": "~2.1.0"
+        "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

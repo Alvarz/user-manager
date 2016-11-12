@@ -155,8 +155,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Caffeinated\Shinobi\ShinobiServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Caffeinated\Shinobi\ShinobiServiceProvider::class
 
     ],
 
@@ -203,8 +202,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class
 
     ],
 

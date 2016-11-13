@@ -29,7 +29,19 @@ class CrudCtrlProperties extends Controller
    */
     public function getProperties()
     {
-      return Property::all();
+      $properties = Property::all();
+
+      foreach ($properties as $key => $Property) {
+
+        $Property->state = $Property->state;
+        $Property->facilities = $Property->facilities;
+        foreach ($Property->facilities as $key => $facilityObj) {
+          $Property->facilities[$key] = $facilityObj->facility[0];
+        }
+      }
+
+      $properties[$key] = $Property;
+      return $properties;
     }
 
     /**
@@ -38,7 +50,15 @@ class CrudCtrlProperties extends Controller
      */
     public function getOneProperty($idProperty)
     {
-      return Property::find($idProperty);
+      $Property = Property::find($idProperty);
+
+      $Property->state = $Property->state;
+      $Property->facilities = $Property->facilities;
+      foreach ($Property->facilities as $key => $facilityObj) {
+        $Property->facilities[$key] = $facilityObj->facility[0];
+      }
+      return $Property;
+
     }
 
     /**

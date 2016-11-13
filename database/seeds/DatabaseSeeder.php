@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(facilitiesTableSeeder::class);
         $this->call(stateTableSeeder::class);
         $this->call(propertiesSeeder::class);
+        $this->call(facilitiesPropertiesSeeder::class);
 
     }
 }

@@ -9,7 +9,15 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                Property
+                <div class="row">
+                  <div class="col-xs-6">
+                      Property
+                  </div>
+                  <div class="col-xs-6" >
+                      <a style="float:right" href="/property/edit/{{$property->id}}" class="btn btn-lg btn-info">Edit</a>
+                  </div>
+                </div>
+
               </div>
               <div class="panel-body">
                 <table class="table table-striped" >
@@ -64,8 +72,8 @@
                 </div>
                 <div class="">
                   <ul class="list-group">
-                    @foreach($property->facilities as $facility)
-                      <li class="list-group-item">{{$facility->name}}</li>
+                    @foreach($property->facilities as $facilityObj)
+                      <li class="list-group-item">{{$facilityObj->facility[0]->name}}</li>
                     @endforeach
                   </ul>
                 </div>

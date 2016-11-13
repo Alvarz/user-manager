@@ -4,12 +4,42 @@ $(document).on('change', '#states', function(e) {
   var State = $('#states').val();
   var url = '/' + $(this).data('url');
   var param = '/' + idProperty + '/' + State;
-  console.log(url);
   AjaxWithToken(url, param, '', 'PUT', function() {
-    // setTimeout(function() {
-    //   location.reload();
-    // }, 3000);
+    setTimeout(function() {
+      location.reload();
+    }, 3000);
   });
+});
+
+$(document).on('click', '.del-property', function(e) {
+  e.preventDefault;
+  var idProperty = $(this).data('id');
+  var url = '/api/properties';
+  var param = '/' + idProperty;
+  AjaxWithToken(url, param, '', 'DELETE', function() {
+    setTimeout(function() {
+      location.reload();
+    }, 3000);
+  });
+});
+
+$(document).on('submit', '#editProperty', function(e){
+  e.preventDefault;
+  var url = "/api/properties";
+  var param = '/'+ $('#id').val();
+  var data = $(this).serializeArray();
+  console.log(data);
+  AjaxCalls(url, param, data, 'PUT');
+  return false;
+});
+
+
+$(document).on('submit', '#createProperty', function(e){
+  e.preventDefault;
+  var url = "/api/properties";
+  var data = $(this).serializeArray();
+  AjaxCalls(url, '', data, 'POST');
+  return false;
 });
 
 var abortAjax = '';
@@ -28,22 +58,11 @@ function AjaxWithToken(url, param = "", data = {}, method = "GET", callback = nu
       _token: csrfToken
     },
     async: true,
-    error: function(xhr, textStatus, errorThrown) {
-      this.tryCount++;
-      if (textStatus != 'abort') {
-        if (this.tryCount <= this.retryLimit) {
-          if (errorThrown == 'Unprocessable Entity') {
-            console.log(errorThrown);
-            var alert = '<div class="alert-dismissible alert  alert-danger"  >An error has occurred <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-            $('.alertas').html(alert);
-          }
-          console.log(textStatus + ' ' + errorThrown);
-          $.ajax(this);
-          return;
-        }
-      }
-      return;
-    },
+    error: function(data){
+         var errors = data.responseJSON;
+         console.log(errors);
+         // Render the errors with js ...
+       },
     success: function(data) {
       var alert = '<div class="alert-dismissible alert  ' + data.type + '"  >' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
       $('.alertas').html(alert);
@@ -72,21 +91,11 @@ function AjaxCalls(url, param = "", data = {}, method = "GET", callback = null) 
       //$('#contentCenter').html(loading('table',0));
       // $("#loading-table").show();
     },
-    error: function(xhr, textStatus, errorThrown) {
-      this.tryCount++;
-      if (textStatus != 'abort') {
-        if (this.tryCount <= this.retryLimit) {
-          if (errorThrown == 'Unprocessable Entity') {
-            var alert = '<div class="alert-dismissible alert alert-danger"  >An error has occurred <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-            $('.alertas').html(alert);
-          }
-          console.log(textStatus + ' ' + errorThrown);
-          $.ajax(this);
-          return;
-        }
-      }
-      return;
-    },
+    error: function(data){
+         var errors = data.responseJSON;
+         console.log(errors);
+         // Render the errors with js ...
+       },
 
     complete: function() {
 

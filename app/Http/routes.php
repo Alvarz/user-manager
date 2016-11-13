@@ -89,5 +89,22 @@ Route::delete('/revoleallroles/{idUser}', 'RolesCtrl@revokeAllPermissions');
 /********************************************************/
 Route::get('/properties', 'PropertiesCtrl@index');
 Route::get('/properties/{idProperty}', 'PropertiesCtrl@details');
+Route::get('/property/edit/{idProperty}', 'PropertiesCtrl@edit');
+
+Route::get('/property/create', 'PropertiesCtrl@create');
 
 Route::put('/property/updateState/{idProperty}/{state}', 'PropertiesCtrl@updateState');
+
+
+/*********************************/
+  /****************CRUD*************/
+/*********************************/
+
+Route::get('/api/properties', 'PropertiesCtrl@getProperties');
+Route::get('/api/properties/{idProperty}', 'PropertiesCtrl@getOneProperty');
+
+Route::post('/api/properties', 'PropertiesCtrl@store');
+
+Route::put('/api/properties/{idProperty}', 'PropertiesCtrl@update');
+
+Route::delete('/api/properties/{idProperty}', 'PropertiesCtrl@delete');

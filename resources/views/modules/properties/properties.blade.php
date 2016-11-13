@@ -6,12 +6,12 @@
       <div class="col-md-8 col-md-offset-2 alertas col-xs-12">
 
       </div>
-        <div class="col-md-8 col-md-offset-2 col-xs-12">
+        <div class="col-xs-12">
             <div class="panel panel-default">
               <div class="panel-heading">
                 Properties list
               </div>
-              <div class="panel-body">
+              <div class="panel-body" >
                 <table class="table table-striped" >
                   <thead>
                     <tr>
@@ -49,6 +49,7 @@
                         </td>
                         <td>
                           <a class="btn btn-info btn-sm" href="/properties/{{$property->id}}">Details</a>
+                          <a data-id="{{$property->id}}" class="btn btn-danger btn-sm del-property" href="#">Delete</a>
                         </td>
                       </tr>
                     @endforeach
@@ -56,7 +57,15 @@
                 </table>
               </div>
               <div class="panel-footer">
-                {{$properties->links()}}
+                <div class="row">
+                  <div style="text-align:center" class="col-sm-6 col-xs-12">
+                      {{$properties->links()}}
+                  </div>
+                  <div style="text-align:center" class="col-sm-6 col-xs-12">
+                    <a class="btn btn-success" href="/property/create">Add new property</a>
+                  </div>
+                </div>
+
               </div>
             </div>
         </div>

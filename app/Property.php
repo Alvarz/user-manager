@@ -9,7 +9,7 @@ class Property extends Model
 
 
   protected $fillable = [
-      'title', 'description', 'address', 'town', 'country'
+      'title', 'description', 'address', 'town', 'country', 'county', 'state_id'
   ];
 
 

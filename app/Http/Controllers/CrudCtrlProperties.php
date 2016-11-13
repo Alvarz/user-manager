@@ -96,8 +96,6 @@ class CrudCtrlProperties extends Controller
         }else{
           return $this->helper->responseJson('state updated');
         }
-
-
       }else{
         return $this->helper->responseJson('error updateding poperty', false);
       }
@@ -118,6 +116,7 @@ class CrudCtrlProperties extends Controller
           'county' => 'required|max:255',
           'country' => 'required|max:255'
       ]);
+
 
       // dd($request->all());
       $res =  Property::create([

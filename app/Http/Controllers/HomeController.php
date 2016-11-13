@@ -26,4 +26,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the application endpoints.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function endpoints()
+    {
+        return view('modules/apiendpoints/apiendpoints');
+    }
 }

@@ -29,6 +29,7 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/endpoints', 'HomeController@endpoints');
 // Route::get('/home', 'HomeController@index');
 
 /*******************************************************/

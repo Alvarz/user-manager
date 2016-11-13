@@ -20,7 +20,7 @@ class PermissionsCtrl extends Controller
 
     /**
      *
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function index()
     {
@@ -35,8 +35,8 @@ class PermissionsCtrl extends Controller
     }
 
     /**
-     * 
-     * @return Illuminate\View
+     *
+     * @return \Illuminate\Http\Response
      */
     protected function create()
     {
@@ -50,7 +50,7 @@ class PermissionsCtrl extends Controller
 
     /**
      * @param int
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function edit($idPermission)
     {
@@ -77,7 +77,6 @@ class PermissionsCtrl extends Controller
                 'name' => 'required|max:255',
                 'slug' => 'required|unique:permissions|max:100',
                 'description' => 'max:500'
-
                 ]
             );
 

@@ -37,7 +37,7 @@ class RolesCtrl extends Controller
 
     /**
      *
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function create()
     {
@@ -52,7 +52,7 @@ class RolesCtrl extends Controller
 
     /**
      * @param int
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function edit($idRole)
     {
@@ -193,7 +193,7 @@ class RolesCtrl extends Controller
 
     /**
      * @param int
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function rolePermissions($idRole)
     {

@@ -21,7 +21,7 @@ class UsersCtrl extends Controller
 
     /**
      *
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function index()
     {
@@ -41,7 +41,7 @@ class UsersCtrl extends Controller
 
     /**
      * @param request
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function create()
     {
@@ -59,7 +59,7 @@ class UsersCtrl extends Controller
 
     /**
      * @param int
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
     protected function edit($idUser)
     {

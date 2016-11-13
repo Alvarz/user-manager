@@ -30,28 +30,27 @@ class PropertiesCtrl extends Controller
 
   /**
    *
-   * @return Illuminate\View
+   * @return \Illuminate\Http\Response
    */
   public function index()
   {
-
       $data['properties'] = Property::orderBy('updated_at', 'desc')->paginate(10);
       return view('modules/properties/properties')->with($data);
   }
 
   /**
    *
-   * @return Illuminate\View
+   * @return \Illuminate\Http\Response
    */
-  public function create()  {
-
+  public function create()
+  {
         $data['facilities'] = Facilities::all();
         return view('modules/properties/property-create')->with($data);
-    }
+  }
 
     /**
      * @param int
-     * @return Illuminate\View
+     * @return \Illuminate\Http\Response
      */
   public function details($idProperty)
   {
@@ -62,7 +61,7 @@ class PropertiesCtrl extends Controller
 
   /**
    * @param int
-   * @return Illuminate\View
+   * @return \Illuminate\Http\Response
    */
   public function edit($idProperty)
   {
@@ -92,8 +91,5 @@ class PropertiesCtrl extends Controller
 
       return $this->CrudCtrl->update($idProperty, $request);
   }
-
-
-
 
 }

@@ -29,6 +29,7 @@
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @else
+                <li><a href="{{ url('/endpoints') }}">Api Endpoints</a></li>
                 <li><a href="{{ url('/properties') }}">Properties</a></li>
                 @canatleast(['permission.list', 'role.list', 'user.list'])
                     <li class="dropdown">

@@ -9,11 +9,20 @@ use Auth;
 
 class UsersCtrl extends Controller
 {
+
+  /**
+   *
+   * @return void
+   */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     *
+     * @return Illuminate\View
+     */
     protected function index()
     {
         if (Auth::user()->can('user.list')) {
@@ -30,7 +39,11 @@ class UsersCtrl extends Controller
         }
     }
 
-    protected function create(request $request)
+    /**
+     * @param request
+     * @return Illuminate\View
+     */
+    protected function create()
     {
 
         if (Auth::user()->can('user.add')) {
@@ -44,6 +57,10 @@ class UsersCtrl extends Controller
 
     }
 
+    /**
+     * @param int
+     * @return Illuminate\View
+     */
     protected function edit($idUser)
     {
         if (Auth::user()->can('user.edit')) {
@@ -59,6 +76,10 @@ class UsersCtrl extends Controller
         }
     }
 
+    /**
+     * @param request
+     * @return array
+     */
     protected function store(request $request)
     {
         if (Auth::user()->can('user.add')) {
@@ -91,6 +112,10 @@ class UsersCtrl extends Controller
         }
     }
 
+    /**
+     * @param int, request
+     * @return array
+     */
     protected function update($idUser, request $request)
     {
 
@@ -142,6 +167,10 @@ class UsersCtrl extends Controller
     }
 
 
+    /**
+     * @param int
+     * @return array
+     */
     protected function remove($idUser)
     {
 
@@ -173,6 +202,10 @@ class UsersCtrl extends Controller
     }
 
 
+    /**
+     * @param int, request
+     * @return array
+     */
     protected function assignUserRole($idUser, request $request)
     {
         if (Auth::user()->can('role.assign')) {
@@ -192,6 +225,10 @@ class UsersCtrl extends Controller
 
     }
 
+    /**
+     * @param int, int
+     * @return array
+     */
     protected function revokeuserRole($idUser, $idRole)
     {
         if (Auth::user()->can('role.remove')) {
@@ -207,6 +244,10 @@ class UsersCtrl extends Controller
 
     }
 
+    /**
+     * @param int
+     * @return array
+     */
     protected function revokeAllRoles($idUser)
     {
 
@@ -237,7 +278,10 @@ class UsersCtrl extends Controller
         }
     }
 
-
+    /**
+     * @param int, int, bool
+     * @return array
+     */
     private function assignOrRevoke($idUser, $idRoles, $action=true)
     {
         if (Auth::user()->canAtLeast(['role.remove', 'role.add'])) {

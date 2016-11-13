@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Agent-backoffice') }}
+                {{ config('app.name', 'Properties dashboard') }}
             </a>
         </div>
 

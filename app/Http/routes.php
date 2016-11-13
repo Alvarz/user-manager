@@ -100,11 +100,11 @@ Route::put('/property/updateState/{idProperty}/{state}', 'PropertiesCtrl@updateS
   /****************CRUD*************/
 /*********************************/
 
-Route::get('/api/properties', 'PropertiesCtrl@getProperties');
-Route::get('/api/properties/{idProperty}', 'PropertiesCtrl@getOneProperty');
+Route::get('/api/properties', 'CrudCtrlProperties@getProperties');
+Route::get('/api/properties/{idProperty}', 'CrudCtrlProperties@getOneProperty');
 
-Route::post('/api/properties', 'PropertiesCtrl@store');
+Route::post('/api/properties', 'CrudCtrlProperties@store');
 
-Route::put('/api/properties/{idProperty}', 'PropertiesCtrl@update');
+Route::put('/api/properties/{idProperty}', 'CrudCtrlProperties@update');
 
-Route::delete('/api/properties/{idProperty}', 'PropertiesCtrl@delete');
+Route::delete('/api/properties/{idProperty}', 'CrudCtrlProperties@delete');

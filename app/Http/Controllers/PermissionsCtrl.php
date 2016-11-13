@@ -9,11 +9,19 @@ use Auth;
 class PermissionsCtrl extends Controller
 {
 
+  /**
+   *
+   * @return void
+   */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     *
+     * @return Illuminate\View
+     */
     protected function index()
     {
         if (Auth::user()->can('permission.list')) {
@@ -26,7 +34,11 @@ class PermissionsCtrl extends Controller
         }
     }
 
-    protected function create(request $request)
+    /**
+     * 
+     * @return Illuminate\View
+     */
+    protected function create()
     {
         if (Auth::user()->can('permission.add')) {
 
@@ -36,6 +48,10 @@ class PermissionsCtrl extends Controller
         }
     }
 
+    /**
+     * @param int
+     * @return Illuminate\View
+     */
     protected function edit($idPermission)
     {
         if (Auth::user()->can('permission.edit')) {
@@ -48,6 +64,10 @@ class PermissionsCtrl extends Controller
         }
     }
 
+    /**
+     * @param request
+     * @return array
+     */
     protected function store(request $request)
     {
         if (Auth::user()->can('permission.add')) {
@@ -90,6 +110,10 @@ class PermissionsCtrl extends Controller
         }
     }
 
+    /**
+     * @param int, request
+     * @return array
+     */
     protected function update($idPermission, request $request)
     {
         if (Auth::user()->can('permission.edit')) {
@@ -132,6 +156,10 @@ class PermissionsCtrl extends Controller
     }
 
 
+    /**
+     * @param int
+     * @return array
+     */
     protected function remove($IdPermission)
     {
         if (Auth::user()->can('permission.delete')) {
